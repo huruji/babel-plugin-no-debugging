@@ -45,7 +45,7 @@ npm install -D babel-plugin-no-debugging
 ```
 {
   "scripts": {
-    "build": "cross-env BABEL_ENV=build webpack",
+    "build": "cross-env BABEL_ENV=publish webpack",
   },
 }
 ```
