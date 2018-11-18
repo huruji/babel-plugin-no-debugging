@@ -8,3 +8,5 @@ function add(m, n) {
   return m + n;
 }
 add(a, b);
+
+console.log('end')

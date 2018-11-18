@@ -26,13 +26,24 @@ const visitor = {
         state.opts = defualtOpts;
       }
     }
-    if (path.node && path.node.expression && path.node.expression.type === 'CallExpression' && path.node.expression.callee && path.node.expression.callee.name === 'alert') {
-      if (state && state.opts) {
-        if (typeof state.opts.alert === 'undefined') {
-          state.opts.alert = true;
+    if (path.node && path.node.expression && path.node.expression.type === 'CallExpression' && path.node.expression.callee) {
+      // remove alert
+      if (path.node.expression.callee.name === 'alert') {
+        if (state && state.opts) {
+          if (typeof state.opts.alert === 'undefined') {
+            state.opts.alert = true;
+          }
+          if (state.opts.alert) {
+            path.remove()
+          }
         }
-        if (state.opts.alert) {
-          path.remove()
+        return;
+      }
+
+      // remove console
+      if (path.node.expression.callee.type === 'MemberExpression' && path.node.expression.callee.object && path.node.expression.callee.object.name === 'console') {
+        if (state && state.opts && state.opts.console) {
+          path.remove();
         }
       }
     }

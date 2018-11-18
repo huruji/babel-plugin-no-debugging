@@ -10,6 +10,9 @@ const result = babel.transform(code, {
   plugins: [
     [
       noDebuggerPlugin,
+      {
+        console: true
+      }
     ]
   ]
 })
