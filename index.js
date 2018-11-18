@@ -46,6 +46,14 @@ const visitor = {
           path.remove();
         }
       }
+
+      // remove customized debugger function
+      if (state.opts.debugFn && typeof state.opts.debugFn === 'string') {
+        const fn = state.opts.debugFn;
+        if (path.node.expression.callee.name === fn) {
+          path.remove();
+        }
+      }
     }
   }
 }
