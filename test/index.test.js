@@ -11,8 +11,10 @@ const result = babel.transform(code, {
     [
       noDebuggerPlugin,
       {
-        console: true,
-        debugFn: 'debug'
+        // console: true,
+        // debugFn: 'debug'
+        alert: true,
+        console: false
       }
     ]
   ]

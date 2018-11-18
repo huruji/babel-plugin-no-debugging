@@ -2,7 +2,7 @@ const utils = require('./utils');
 
 const defualtOpts = {
   debugger: true,
-  alert: true
+  console: true
 }
 
 
@@ -29,22 +29,23 @@ const visitor = {
     if (utils.chainGet(path).node.expression.type() === 'CallExpression' && utils.chainGet(path).node.expression.callee()) {
       // remove alert
       if (path.node.expression.callee.name === 'alert') {
-        if (state && state.opts) {
-          if (typeof state.opts.alert === 'undefined') {
-            state.opts.alert = true;
-          }
-          if (state.opts.alert) {
-            path.remove()
-          }
+        if (state.opts.alert) {
+          path.remove()
         }
         return;
       }
 
       // remove console
       if (path.node.expression.callee.type === 'MemberExpression' && utils.chainGet(path).node.expression.callee.object.name() === 'console') {
+        if (state && state.opts) {
+          if (typeof state.opts.console === 'undefined') {
+            state.opts.console = true;
+          }
+        }
         if (utils.chainGet(state).opts.console()) {
           path.remove();
         }
+        return;
       }
 
       // remove customized debugger function
