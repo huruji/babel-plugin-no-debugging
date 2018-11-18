@@ -12,7 +12,7 @@ npm install -D babel-plugin-no-debugging
 `.babelrc`
 ```js
 {
-  plugins: ['no-debugging']
+  plugins: ["no-debugging"]
 }
 ```
 
@@ -21,6 +21,34 @@ npm install -D babel-plugin-no-debugging
 这个插件可以移除 `debugger` 、 `console` 、 `alert` 和 自定义的调试函数调用和定义。自定义的debugger函数常常在不好调试的端环境中使用，如在可抓包环境下发起一个简单请求判断代码是否运行到某个位置
 
 > 注意：据笔者了解 `alert` 函数调用仍然大量存在于各类管理后台系统中，开启时需要注意。
+
+为保证在开发阶段不转换代码，记得将这个插件配置在发布环境：
+
+`.babelrc`
+
+```js
+{
+ {
+  "env": {
+    "publish": {
+      "presets": [
+        "@babel/preset-env"
+      ],
+      "plugins": ["no-debugging"]
+    }
+  }
+}
+```
+
+在项目的 `package.json` 中配置好 `scripts` 会更加方便：
+
+```
+{
+  "scripts": {
+    "build": "cross-env BABEL_ENV=build webpack",
+  },
+}
+```
 
 ## options
 
