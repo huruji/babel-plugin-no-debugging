@@ -8,9 +8,10 @@ alert(123);
 //   console.log(123)
 // }
 
-const debug = function () {
-  console.log(123);
-}
+const c = 15,
+  debug = function () {
+    console.log(123);
+  }
 
 debug();
 

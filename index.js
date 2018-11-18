@@ -1,5 +1,3 @@
-const babel = require('@babel/core');
-const t = require('@babel/types');
 const utils = require('./utils');
 
 const defualtOpts = {
@@ -64,14 +62,15 @@ const visitor = {
       path.remove();
     }
   },
-  VariableDeclaration(path, state) {
+  VariableDeclarator(path, state) {
     if (!state || typeof state.opts === 'undefined' || !state.opts.debugFn || typeof state.opts.debugFn !== 'string') return;
     const fn = state.opts.debugFn;
-    if (utils.chainGet(path).node.declarations[0]()) {
-      const declarations = utils.chainGet(path).node.declarations();
-      if (declarations.length > 1) return;
-      if (utils.chainGet(declarations[0]).init.type() === 'FunctionExpression' && utils.chainGet(declarations[0]).id.name() === fn) {
+    if (utils.chainGet(path).node.id.name() === fn) {
+      if (path.inList) {
         path.remove();
+      } else {
+        const parentPath = path.parentPath;
+        parentPath.remove();
       }
     }
   }
