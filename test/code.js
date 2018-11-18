@@ -4,8 +4,12 @@ debugger;
 
 alert(123);
 
-function debug() {
-  console.log(123)
+// function debug() {
+//   console.log(123)
+// }
+
+const debug = function () {
+  console.log(123);
 }
 
 debug();

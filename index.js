@@ -65,19 +65,12 @@ const visitor = {
     }
   },
   VariableDeclaration(path, state) {
-    // console.log('variable');
-    // console.log(utils.chainGet(path).node.declarations[0]().path.remove())
     if (!state || typeof state.opts === 'undefined' || !state.opts.debugFn || typeof state.opts.debugFn !== 'string') return;
     const fn = state.opts.debugFn;
     if (utils.chainGet(path).node.declarations[0]()) {
       const declarations = utils.chainGet(path).node.declarations();
-      let remove = false;
-      declarations.forEach((declaration) => {
-        if (utils.chainGet(declaration).init.type() === 'FunctionExpression' && utils.chainGet(declaration).id.name() === fn) {
-          remove = true;
-        }
-      })
-      if (remove) {
+      if (declarations.length > 1) return;
+      if (utils.chainGet(declarations[0]).init.type() === 'FunctionExpression' && utils.chainGet(declarations[0]).id.name() === fn) {
         path.remove();
       }
     }
