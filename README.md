@@ -92,7 +92,7 @@ const result = add(a, b);
       "no-debugging",
       {
         alert: true,
-        debugerFn: "requestDebug",
+        debugFn: "requestDebug",
         console: false
       }
     ]
