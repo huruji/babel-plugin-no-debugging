@@ -1,0 +1,10 @@
+node_modules/
+.editorconfig
+.eslintignore
+.eslintrc
+.gitignore
+.travis.yml
+.npmrc
+.npmignore
+package-lock.json
+test/

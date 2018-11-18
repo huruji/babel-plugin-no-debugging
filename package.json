@@ -1,6 +1,6 @@
 {
-  "name": "babel-plugin-no-dubugging",
-  "version": "1.0.0",
+  "name": "babel-plugin-no-debugging",
+  "version": "1.0.3",
   "description": "上线前去掉调试代码的Babel插件",
   "main": "index.js",
   "scripts": {
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/huruji/babel-plugin-no-dubugging.git"
+    "url": "git+https://github.com/huruji/babel-plugin-no-debugging.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/huruji/babel-plugin-no-dubugging/issues"
+    "url": "https://github.com/huruji/babel-plugin-no-debugging/issues"
   },
-  "homepage": "https://github.com/huruji/babel-plugin-no-dubugging#readme",
+  "homepage": "https://github.com/huruji/babel-plugin-no-debugging#readme",
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.6",
