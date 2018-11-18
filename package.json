@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-no-debugging",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "上线前去掉调试代码的Babel插件",
   "main": "index.js",
   "scripts": {
