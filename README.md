@@ -137,7 +137,6 @@ const b = 13;
 
 
 function add(m, n) {
-  debugger;
   return m + n;
 }
 
