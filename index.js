@@ -1,10 +1,12 @@
 const babel = require('@babel/core');
 const t = require('@babel/types');
+const utils = require('./utils');
 
 const defualtOpts = {
   debugger: true,
   alert: true
 }
+
 
 const visitor = {
   DebuggerStatement(path, state) {
@@ -50,13 +52,38 @@ const visitor = {
       // remove customized debugger function
       if (state.opts.debugFn && typeof state.opts.debugFn === 'string') {
         const fn = state.opts.debugFn;
-        if (path.node.expression.callee.name === fn) {
+        if (utils.chainGet(path).node.expression.callee.name() === fn) {
           path.remove();
         }
       }
     }
+  },
+  FunctionDeclaration(path, state) {
+    if (!state || typeof state.opts === 'undefined' || !state.opts.debugFn || typeof state.opts.debugFn !== 'string') return;
+    if (path && path.node && path.node.id && path.node.id.type === 'Identifier' && path.node.id.name === state.opts.debugFn) {
+      path.remove();
+    }
+  },
+  VariableDeclaration(path, state) {
+    // console.log('variable');
+    // console.log(utils.chainGet(path).node.declarations[0]().path.remove())
+    if (!state || typeof state.opts === 'undefined' || !state.opts.debugFn || typeof state.opts.debugFn !== 'string') return;
+    const fn = state.opts.debugFn;
+    if (utils.chainGet(path).node.declarations[0]()) {
+      const declarations = utils.chainGet(path).node.declarations();
+      let remove = false;
+      declarations.forEach((declaration) => {
+        if (utils.chainGet(declaration).init.type() === 'FunctionExpression' && utils.chainGet(declaration).id.name() === fn) {
+          remove = true;
+        }
+      })
+      if (remove) {
+        path.remove();
+      }
+    }
   }
 }
+
 
 module.exports = function () {
   return {
