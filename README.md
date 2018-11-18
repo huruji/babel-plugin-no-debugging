@@ -1,4 +1,4 @@
-# babel-plugin-no-dubugging
+# babel-plugin-no-debugging
 上线前去掉调试代码的Babel插件
 
 ## 安装
