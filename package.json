@@ -1,0 +1,30 @@
+{
+  "name": "babel-plugin-no-dubugging",
+  "version": "1.0.0",
+  "description": "上线时去掉调试代码的Babel插件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huruji/babel-plugin-no-dubugging.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huruji/babel-plugin-no-dubugging/issues"
+  },
+  "homepage": "https://github.com/huruji/babel-plugin-no-dubugging#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/types": "^7.1.6",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1"
+  }
+}
