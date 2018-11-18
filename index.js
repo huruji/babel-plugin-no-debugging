@@ -26,7 +26,7 @@ const visitor = {
         state.opts = defualtOpts;
       }
     }
-    if (path.node && path.node.expression && path.node.expression.type === 'CallExpression' && path.node.expression.callee) {
+    if (utils.chainGet(path).node.expression.type() === 'CallExpression' && utils.chainGet(path).node.expression.callee()) {
       // remove alert
       if (path.node.expression.callee.name === 'alert') {
         if (state && state.opts) {
@@ -41,14 +41,14 @@ const visitor = {
       }
 
       // remove console
-      if (path.node.expression.callee.type === 'MemberExpression' && path.node.expression.callee.object && path.node.expression.callee.object.name === 'console') {
-        if (state && state.opts && state.opts.console) {
+      if (path.node.expression.callee.type === 'MemberExpression' && utils.chainGet(path).node.expression.callee.object.name() === 'console') {
+        if (utils.chainGet(state).opts.console()) {
           path.remove();
         }
       }
 
       // remove customized debugger function
-      if (state.opts.debugFn && typeof state.opts.debugFn === 'string') {
+      if (typeof utils.chainGet(state).opts.debugFn() === 'string') {
         const fn = state.opts.debugFn;
         if (utils.chainGet(path).node.expression.callee.name() === fn) {
           path.remove();
@@ -58,7 +58,7 @@ const visitor = {
   },
   FunctionDeclaration(path, state) {
     if (!state || typeof state.opts === 'undefined' || !state.opts.debugFn || typeof state.opts.debugFn !== 'string') return;
-    if (path && path.node && path.node.id && path.node.id.type === 'Identifier' && path.node.id.name === state.opts.debugFn) {
+    if (utils.chainGet(path).node.id.type() === 'Identifier' && path.node.id.name === state.opts.debugFn) {
       path.remove();
     }
   },
