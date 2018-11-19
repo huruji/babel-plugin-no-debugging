@@ -14,7 +14,7 @@ const result = babel.transform(code, {
         // console: true,
         // debugFn: 'debug'
         alert: true,
-        console: false
+        console: true
       }
     ]
   ]

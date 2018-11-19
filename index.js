@@ -1,5 +1,4 @@
-const utils = require('./utils');
-
+const chainGet = require('chain-get');
 const defualtOpts = {
   debugger: true,
   console: true
@@ -26,7 +25,7 @@ const visitor = {
         state.opts = defualtOpts;
       }
     }
-    if (utils.chainGet(path).node.expression.type() === 'CallExpression' && utils.chainGet(path).node.expression.callee()) {
+    if (chainGet(path).node.expression.type() === 'CallExpression' && chainGet(path).node.expression.callee()) {
       // remove alert
       if (path.node.expression.callee.name === 'alert') {
         if (state.opts.alert) {
@@ -36,22 +35,22 @@ const visitor = {
       }
 
       // remove console
-      if (path.node.expression.callee.type === 'MemberExpression' && utils.chainGet(path).node.expression.callee.object.name() === 'console') {
+      if (path.node.expression.callee.type === 'MemberExpression' && chainGet(path).node.expression.callee.object.name() === 'console') {
         if (state && state.opts) {
           if (typeof state.opts.console === 'undefined') {
             state.opts.console = true;
           }
         }
-        if (utils.chainGet(state).opts.console()) {
+        if (chainGet(state).opts.console()) {
           path.remove();
         }
         return;
       }
 
       // remove customized debugger function
-      if (typeof utils.chainGet(state).opts.debugFn() === 'string') {
+      if (typeof chainGet(state).opts.debugFn() === 'string') {
         const fn = state.opts.debugFn;
-        if (utils.chainGet(path).node.expression.callee.name() === fn) {
+        if (chainGet(path).node.expression.callee.name() === fn) {
           path.remove();
         }
       }
@@ -59,14 +58,14 @@ const visitor = {
   },
   FunctionDeclaration(path, state) {
     if (!state || typeof state.opts === 'undefined' || !state.opts.debugFn || typeof state.opts.debugFn !== 'string') return;
-    if (utils.chainGet(path).node.id.type() === 'Identifier' && path.node.id.name === state.opts.debugFn) {
+    if (chainGet(path).node.id.type() === 'Identifier' && path.node.id.name === state.opts.debugFn) {
       path.remove();
     }
   },
   VariableDeclarator(path, state) {
     if (!state || typeof state.opts === 'undefined' || !state.opts.debugFn || typeof state.opts.debugFn !== 'string') return;
     const fn = state.opts.debugFn;
-    if (utils.chainGet(path).node.id.name() === fn) {
+    if (chainGet(path).node.id.name() === fn) {
       if (path.inList) {
         path.remove();
       } else {
